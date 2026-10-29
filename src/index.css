@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+
+/* Design tokens: use them as bg-ink, text-accent, border-line, etc. */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #0b0b0c; /* page background */
+  --color-surface: #131316; /* cards */
+  --color-line: #26262b; /* borders */
+  --color-muted: #a1a1aa; /* body text */
+  --color-accent: #b6f23a; /* lime accent */
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* keeps section titles clear of the sticky navbar */
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-ink);
+  color: var(--color-muted);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible keyboard focus for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Waving character (Module 3) ---------- */
+
+/* The forearm rotates around the elbow at (322, 378) inside the SVG. */
+.wave-forearm {
+  transform-box: view-box;
+  transform-origin: 322px 378px;
+  transform: rotate(4deg);
+  animation: wave 4s ease-in-out infinite;
+}
+
+/* Both eyes squash flat for a moment, like a real blink. */
+.blink-eyes {
+  transform-box: view-box;
+  transform-origin: 200px 192px;
+  animation: blink 5s infinite;
+}
+
+/* A few quick waves, then a rest, then repeat. */
+@keyframes wave {
+  0%,
+  52%,
+  100% {
+    transform: rotate(4deg);
+  }
+  6% {
+    transform: rotate(14deg);
+  }
+  14% {
+    transform: rotate(-2deg);
+  }
+  22% {
+    transform: rotate(14deg);
+  }
+  30% {
+    transform: rotate(-2deg);
+  }
+  38% {
+    transform: rotate(14deg);
+  }
+  46% {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes blink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  94% {
+    transform: scaleY(0.08);
+  }
+}
+
+/* Respect users who turn off animations */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .wave-forearm,
+  .blink-eyes {
+    animation: none;
+  }
+}
